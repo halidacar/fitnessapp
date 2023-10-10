@@ -1,13 +1,13 @@
-#Fitness Application
-It is designed for beginners in sports. A simple-to-use mobile application with starting gestures
+# Fitness Application
+- It is designed for beginners in sports. A simple-to-use mobile application with starting gestures
 ------------------------------------------------------------------------------------------------------------------------------------
 
 # Create
 
--npx create-expo-app fitnessapp
+- npx create-expo-app fitnessapp
 
--cd fitnessapp
--npx expo start
+- cd fitnessapp
+- npx expo start
 
 ------------------------------------------------------------------------------------------------------------------------------------
 
