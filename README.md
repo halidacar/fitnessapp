@@ -1,6 +1,5 @@
 #Fitness Application
-MVP for a fitness app created using react-native which can be scaled and extended as per the product requirements.
-
+It is designed for beginners in sports. A simple-to-use mobile application with starting gestures
 ------------------------------------------------------------------------------------------------------------------------------------
 
 # Create
