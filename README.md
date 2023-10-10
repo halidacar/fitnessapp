@@ -8,6 +8,7 @@ MVP for a fitness app created using react-native which can be scaled and extende
 npx create-expo-app fitnessapp
 
 cd fitnessapp
+
 npx expo start
 
 ------------------------------------------------------------------------------------------------------------------------------------
