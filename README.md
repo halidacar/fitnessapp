@@ -1,5 +1,5 @@
 # Fitness Application
-- It is designed for beginners in sports. A simple-to-use mobile application with starting gestures
+- It is designed for beginners in sports. It is a mobile application designed for both Android and iOS devices, easy to use with initial gestures.
 ------------------------------------------------------------------------------------------------------------------------------------
 
 # Create
