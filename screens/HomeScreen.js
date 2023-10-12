@@ -6,10 +6,52 @@ import {
   Image,
   ScrollView,
   StatusBar,
+  Pressable,
 } from "react-native";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import FitnessCards from "../components/FitnessCards";
+import { FitnessItems } from "../Context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const HomeScreen = () => {
+  const { minutes, calories, workout } = useContext(FitnessItems);
+
+  const [savedData, setSaveData] = useState("");
+
+  const save = async () => {
+    try {
+      const dataToSave = {
+        minutes: minutes.toString(),
+        calories: calories.toString(),
+        workout: workout.toString(),
+      };
+      await AsyncStorage.setItem("saveData", JSON.stringify(dataToSave));
+      alert("Veriler başarıyla kaydedildi!");
+      console.log(dataToSave);
+    } catch (error) {
+      alert("Veriler kaydedilemedi: " + error);
+    }
+  };
+
+  const load = async () => {
+    try {
+      const savedData = await AsyncStorage.getItem("saveData");
+      if (savedData !== null) {
+        const parsedData = JSON.parse(savedData);
+        setSaveData(parsedData);
+        console.log(parsedData);
+      }
+    } catch (error) {
+      alert("Veriler yüklenemedi: " + error);
+    }
+  };
+  useEffect(() => {
+    load();
+  }, []);
+  useEffect(() => {
+    console.log("savedData:", savedData); // savedData'nın içeriğini kontrol et
+  }, [savedData]);
+
   return (
     <SafeAreaView style={{ flex: 1, paddingTop: StatusBar.currentHeight }}>
       <ScrollView style={{ marginTop: 0 }}>
@@ -18,7 +60,7 @@ const HomeScreen = () => {
             backgroundColor: "orange",
             padding: 10,
             height: 220,
-            width: "%100",
+            width: "100%",
           }}
         >
           <Text
@@ -43,7 +85,7 @@ const HomeScreen = () => {
               <Text
                 style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
               >
-                0
+                {workout}
               </Text>
               <Text style={{ color: "#D0D0D0", fontSize: 17, marginTop: 10 }}>
                 Workouts
@@ -53,7 +95,7 @@ const HomeScreen = () => {
               <Text
                 style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
               >
-                0
+                {calories}
               </Text>
               <Text style={{ color: "#D0D0D0", fontSize: 17, marginTop: 10 }}>
                 KCAL
@@ -63,7 +105,7 @@ const HomeScreen = () => {
               <Text
                 style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
               >
-                0
+                {minutes}
               </Text>
               <Text style={{ color: "#D0D0D0", fontSize: 17, marginTop: 10 }}>
                 MINS
@@ -83,8 +125,70 @@ const HomeScreen = () => {
               }}
             />
           </View>
-          <FitnessCards />
         </View>
+        <Pressable
+          style={{ position: "absolute", top: 45, right: 170 }}
+          onPress={() => save()}
+        >
+          <Text style={{ width: 70, height: 50 }}>Verileri Kaydet</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => load()}
+          style={{ position: "absolute", top: 45, right: 70 }}
+        >
+          <Text style={{ width: 70, height: 50 }}>Calculate</Text>
+        </Pressable>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            top: 95,
+            marginHorizontal: 30,
+          }}
+        >
+          <Text
+            style={{
+              top: -5,
+              fontSize: 20,
+              color: "black",
+              fontWeight: "bold",
+            }}
+          >
+            TOTAL =
+          </Text>
+          <Text
+            style={{
+              width: 70,
+              height: 50,
+              color: "black",
+              fontWeight: "bold",
+            }}
+          >
+            Minutes: {savedData.minutes}
+          </Text>
+          <Text
+            style={{
+              width: 70,
+              height: 50,
+              color: "black",
+              fontWeight: "bold",
+            }}
+          >
+            Calories: {savedData.calories}
+          </Text>
+          <Text
+            style={{
+              width: 70,
+              height: 50,
+              color: "black",
+              fontWeight: "bold",
+            }}
+          >
+            Workout: {savedData.workout}
+          </Text>
+        </View>
+        <FitnessCards />
       </ScrollView>
     </SafeAreaView>
   );

@@ -6,9 +6,10 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, Alert } from "react";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { FitnessItems } from "../Context";
+import { AsyncStorage } from "react-native";
 
 const FitScreen = () => {
   const route = useRoute();
@@ -27,6 +28,18 @@ const FitScreen = () => {
     workout,
     setWorkout,
   } = useContext(FitnessItems);
+
+  const saveData = async () => {
+    try {
+      await AsyncStorage.setItem("calories", String(calories));
+      await AsyncStorage.setItem("minutes", String(minutes));
+      await AsyncStorage.setItem("workout", String(workout));
+      console.log("Veriler kaydedildi:", calories, minutes, workout);
+    } catch (error) {
+      console.error("Veriler kaydedilemedi:", error);
+    }
+  };
+
   return (
     <SafeAreaView>
       <Image
@@ -117,14 +130,6 @@ const FitScreen = () => {
       )}
 
       <Pressable
-        disabled={index === 0}
-        onPress={() => {
-          navigation.navigate("Rest");
-
-          setTimeout(() => {
-            setIndex(index - 1);
-          }, 2000);
-        }}
         style={{
           flexDirection: "row",
           alignItems: "center",
@@ -134,6 +139,16 @@ const FitScreen = () => {
         }}
       >
         <Pressable
+          onPress={() => {
+            if (index == 0) {
+              navigation.goBack();
+            } else {
+              navigation.navigate("Rest");
+              setTimeout(() => {
+                setIndex(index - 1);
+              }, 2000);
+            }
+          }}
           style={{
             backgroundColor: "green",
             padding: 10,

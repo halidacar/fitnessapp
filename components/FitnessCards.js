@@ -15,7 +15,14 @@ const FitnessCards = () => {
   const FitnessData = fitness;
   const navigation = useNavigation();
   return (
-    <View>
+    <SafeAreaView
+      style={{
+        marginTop: 90,
+        width: "100%",
+        justifyContent: "center",
+        alignContent: "center",
+      }}
+    >
       {FitnessData.map((item, key) => (
         <Pressable
           onPress={() =>
@@ -62,7 +69,7 @@ const FitnessCards = () => {
           />
         </Pressable>
       ))}
-    </View>
+    </SafeAreaView>
   );
 };
 

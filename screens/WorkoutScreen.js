@@ -10,6 +10,7 @@ import {
 import React, { useContext } from "react";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { FitnessItems } from "../Context";
 const WorkoutScreen = () => {
   const route = useRoute();
@@ -43,23 +44,33 @@ const WorkoutScreen = () => {
               source={{ uri: item.image }}
             />
             <View style={{ marginLeft: 10 }}>
-              <Text style={{ fontSize: 17, fontWeight: "bold" }}>
+              <Text style={{ fontSize: 17, fontWeight: "bold", width: 170 }}>
                 {item.name}
               </Text>
               <Text style={{ marginTop: 4, fontSize: 16, color: "gray" }}>
                 x{item.sets}
               </Text>
             </View>
+
+            {completed.includes(item.name) ? (
+              <AntDesign
+                style={{ marginLeft: 40 }}
+                name="checkcircle"
+                size={24}
+                color="green"
+              />
+            ) : null}
           </Pressable>
         ))}
       </ScrollView>
 
       <Pressable
-        onPress={() =>
+        onPress={() => {
           navigation.navigate("Fit", {
             excersises: route.params.excersises,
-          })
-        }
+          });
+          setCompleted([]);
+        }}
         style={{
           backgroundColor: "blue",
           padding: 10,
