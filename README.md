@@ -23,7 +23,7 @@
 - npx pod-install ios
 
 # Async-Storage
-- With npm:
+With npm:
 
 - npm install @react-native-async-storage/async-storage
 
