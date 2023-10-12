@@ -25,7 +25,7 @@
    # Async-Storage
   Since I did not keep any database, I did not create a personalized registration and login system. Instead, I preferred to keep the data on the local device.
 
-  # Run
+  # install
   With npm:
   
   - npm install @react-native-async-storage/async-storage
