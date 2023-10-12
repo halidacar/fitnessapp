@@ -27,11 +27,11 @@ With npm:
 
 - npm install @react-native-async-storage/async-storage
 
-- With Yarn:
+With Yarn:
 
 - yarn add @react-native-async-storage/async-storage
 
-- With Expo CLI:
+With Expo CLI:
 
 - npx expo install @react-native-async-storage/async-storage
 
