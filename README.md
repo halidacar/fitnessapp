@@ -19,9 +19,8 @@
 # Dependecies 
 
 - npx expo install react-native-screens react-native-safe-area-context
-  // safe area context
 - npm install react-native-screens react-native-safe-area-context
-- npx pod-install ios // for ios devices
+- npx pod-install ios 
 
    # Async-Storage
 
