@@ -12,6 +12,8 @@ import React, { useContext, useEffect, useState } from "react";
 import FitnessCards from "../components/FitnessCards";
 import { FitnessItems } from "../Context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Entypo } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 const HomeScreen = () => {
   const { minutes, calories, workout } = useContext(FitnessItems);
@@ -127,16 +129,16 @@ const HomeScreen = () => {
           </View>
         </View>
         <Pressable
-          style={{ position: "absolute", top: 45, right: 170 }}
+          style={{ position: "absolute", top: 20, right: 100 }}
           onPress={() => save()}
         >
-          <Text style={{ width: 70, height: 50 }}>Verileri Kaydet</Text>
+          <Entypo name="save" size={30} color="black" />
         </Pressable>
         <Pressable
           onPress={() => load()}
-          style={{ position: "absolute", top: 45, right: 70 }}
+          style={{ position: "absolute", top: 20, right: 35 }}
         >
-          <Text style={{ width: 70, height: 50 }}>Calculate</Text>
+          <AntDesign name="printer" size={30} color="black" />
         </Pressable>
         <View
           style={{
