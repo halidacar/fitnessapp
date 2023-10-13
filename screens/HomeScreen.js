@@ -16,23 +16,49 @@ import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 
 const HomeScreen = () => {
-  const { minutes, calories, workout } = useContext(FitnessItems);
+  const {
+    minutes: fitnessMinutes,
+    calories: fitnessCalories,
+    workout: fitnessWorkout,
+    setMinutes: setFitnessMinutes,
+    setCalories: setFitnessCalories,
+    setWorkout: setFitnessWorkout,
+  } = useContext(FitnessItems);
 
   const [savedData, setSaveData] = useState("");
 
+  const [total, setTotal] = useState({
+    minutes: 0,
+    calories: 0,
+    workoutCount: 0,
+  });
+  const addExercise = (exerciseMinutes, exerciseCalories, exerciseCount) => {
+    setTotal((prevTotal) => ({
+      minutes: prevTotal.minutes + exerciseMinutes,
+      calories: prevTotal.calories + exerciseCalories,
+      workoutCount: prevTotal.workoutCount + exerciseCount,
+    }));
+  };
   const save = async () => {
     try {
       const dataToSave = {
-        minutes: minutes.toString(),
-        calories: calories.toString(),
-        workout: workout.toString(),
+        minutes: fitnessMinutes.toString(),
+        calories: fitnessCalories.toString(),
+        workout: fitnessWorkout.toString(),
       };
+      addExercise(
+        parseFloat(fitnessMinutes),
+        parseFloat(fitnessCalories),
+        parseInt(fitnessWorkout)
+      );
       await AsyncStorage.setItem("saveData", JSON.stringify(dataToSave));
       alert("Veriler başarıyla kaydedildi!");
       console.log(dataToSave);
+      // Remove local values
     } catch (error) {
       alert("Veriler kaydedilemedi: " + error);
     }
+    setFitnessMinutes(0), setFitnessCalories(0), setFitnessWorkout(0);
   };
 
   const load = async () => {
@@ -87,7 +113,7 @@ const HomeScreen = () => {
               <Text
                 style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
               >
-                {workout}
+                {fitnessWorkout}
               </Text>
               <Text style={{ color: "#D0D0D0", fontSize: 17, marginTop: 10 }}>
                 Workouts
@@ -97,7 +123,7 @@ const HomeScreen = () => {
               <Text
                 style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
               >
-                {calories}
+                {fitnessCalories}
               </Text>
               <Text style={{ color: "#D0D0D0", fontSize: 17, marginTop: 10 }}>
                 KCAL
@@ -107,7 +133,7 @@ const HomeScreen = () => {
               <Text
                 style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
               >
-                {minutes}
+                {fitnessWorkout}
               </Text>
               <Text style={{ color: "#D0D0D0", fontSize: 17, marginTop: 10 }}>
                 MINS
@@ -167,7 +193,7 @@ const HomeScreen = () => {
               fontWeight: "bold",
             }}
           >
-            Minutes: {savedData.minutes}
+            Minutes: {total.minutes}
           </Text>
           <Text
             style={{
@@ -177,7 +203,7 @@ const HomeScreen = () => {
               fontWeight: "bold",
             }}
           >
-            Calories: {savedData.calories}
+            Calories: {total.calories}
           </Text>
           <Text
             style={{
@@ -187,7 +213,7 @@ const HomeScreen = () => {
               fontWeight: "bold",
             }}
           >
-            Workout: {savedData.workout}
+            Workout: {total.workoutCount}
           </Text>
         </View>
         <FitnessCards />
